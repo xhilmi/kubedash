@@ -1,0 +1,183 @@
+# Kite - Modern Kubernetes Dashboard
+
+<div align="center">
+
+<img src="./docs/assets/logo.svg" alt="Kite Logo" width="128" height="128">
+
+_A modern, intuitive Kubernetes dashboard_
+
+[![Go Version](https://img.shields.io/badge/Go-1.24+-00ADD8?style=flat&logo=go)](https://golang.org)
+[![React](https://img.shields.io/badge/React-19+-61DAFB?style=flat&logo=react)](https://reactjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5+-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org)
+[![License](https://img.shields.io/badge/License-Apache-green.svg)](LICENSE)
+
+[**Live Demo**](https://kite-demo.xhilmi.me) | [**Documentation**](https://kite.xhilmi.me)
+<br>
+**English** | [中文](./README_zh.md)
+
+</div>
+
+Kite is a lightweight, modern Kubernetes dashboard that provides an intuitive interface for managing and monitoring your Kubernetes clusters. It offers real-time metrics, comprehensive resource management, multi-cluster support, and a beautiful user experience.
+
+> [!WARNING]
+> This project is currently in rapid development and testing, and the usage and API may change.
+
+![Dashboard Overview](docs/screenshots/overview.png)
+_Comprehensive cluster overview with real-time metrics and resource statistics_
+
+## ✨ Features
+
+### 🎯 **Modern User Experience**
+
+- 🌓 **Multi-Theme Support** - Dark/light/color themes with system preference detection
+- 🔍 **Advanced Search** - Global search across all resources
+- 🌐 **Internationalization** - Support for English and Chinese languages
+- 📱 **Responsive Design** - Optimized for desktop, tablet, and mobile devices
+
+### 🏘️ **Multi-Cluster Management**
+
+- 🔄 **Seamless Cluster Switching** - Switch between multiple Kubernetes clusters
+- 📊 **Per-Cluster Monitoring** - Independent Prometheus configuration for each cluster
+- ⚙️ **Kubeconfig Integration** - Automatic discovery of clusters from your kubeconfig file
+- 🔐 **Cluster Access Control** - Fine-grained permissions for cluster access management
+
+### 🔍 **Comprehensive Resource Management**
+
+- 📋 **Full Resource Coverage** - Pods, Deployments, Services, ConfigMaps, Secrets, PVs, PVCs, Nodes, and more
+- 📄 **Live YAML Editing** - Built-in Monaco editor with syntax highlighting and validation
+- 📊 **Detailed Resource Views** - In-depth information with containers, volumes, events, and conditions
+- 🔗 **Resource Relationships** - Visualize connections between related resources (e.g., Deployment → Pods)
+- ⚙️ **Resource Operations** - Create, update, delete, scale, and restart resources directly from the UI
+- 🔄 **Custom Resources** - Full support for CRDs (Custom Resource Definitions)
+- 🏷️ **Quick Image Tag Selector** - Easily select and change container image tags based on Docker and container registry APIs
+- 🎨 **Customizable Sidebar** - Customize sidebar visibility and order, and add CRDs for quick access
+- 🔌 **Kube Proxy** - Access pods or services directly through Kite, no more `kubectl port-forward`
+
+### 📈 **Monitoring & Observability**
+
+- 📊 **Real-time Metrics** - CPU, memory, and network usage charts powered by Prometheus
+- 📋 **Cluster Overview** - Comprehensive cluster health and resource statistics
+- 📝 **Live Logs** - Stream pod logs in real-time with filtering and search capabilities
+- 💻 **Web/Node Terminal** - Execute commands directly in pods/nodes through the browser
+- 📈 **Node Monitoring** - Detailed node-level performance metrics and utilization
+- 📊 **Pod Monitoring** - Individual pod resource usage and performance tracking
+
+### 🔐 **Security**
+
+- 🛡️ **OAuth Integration** - Supports OAuth management in the UI
+- 🔒 **Role-Based Access Control** - Supports user permission management in the UI
+- 👥 **User Management** - Comprehensive user management and role allocation in the UI
+
+---
+
+## 🚀 Quick Start
+
+For detailed instructions, please refer to the [documentation](https://kite.xhilmi.me/guide/installation.html).
+
+### Docker
+
+To run Kite using Docker, you can use the pre-built image:
+
+```bash
+docker run --rm -p 8080:8080 docker.io/xhilmi/kubedash:latest
+```
+
+### Deploy in Kubernetes
+
+#### Using Helm (Recommended)
+
+1. **Add Helm repository**
+
+   ```bash
+   helm repo add kite https://xhilmi.github.io/kubedash
+   helm repo update
+   ```
+
+2. **Install with default values**
+
+   ```bash
+   helm install kite kite/kite -n kube-system
+   ```
+
+#### Using kubectl
+
+1. **Apply deployment manifests**
+
+   ```bash
+   kubectl apply -f deploy/install.yaml
+   # or install it online
+   kubectl apply -f https://raw.githubusercontent.com/xhilmi/kubedash/refs/heads/main/deploy/install.yaml
+   ```
+
+2. **Access via port-forward**
+
+   ```bash
+   kubectl port-forward -n kube-system svc/kite 8080:8080
+   ```
+
+### Build from Source
+
+#### 📋 Prerequisites
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/xhilmi/kubedash.git
+   cd kite
+   ```
+
+2. **Build the project**
+
+   ```bash
+   make deps
+   make build
+   ```
+
+3. **Run the server**
+
+   ```bash
+   make run
+   ```
+
+---
+
+## 🎁 Custom Improvements (This Fork)
+
+This fork includes several enhancements focused on deployment management and user experience:
+
+### 🚀 **Deployment Management**
+- ⏮️ **Helm Rollback with FluxCD Integration** - Roll back to any previous revision with automatic FluxCD suspension
+- ⏸️ **Manual FluxCD Controls** - Suspend and resume FluxCD reconciliation for manual testing
+- 📊 **Helm History Tab** - View complete revision history with image version tracking
+- 🔄 **Flux Status Tab** - Real-time FluxCD HelmRelease status monitoring
+- 📝 **Extended Action History** - Track all deployment actions: edit, restart, scale, rollback, suspend, resume
+
+### 🎨 **User Experience**
+- 💬 **Human-Friendly Language** - Conversational English with emojis and clear explanations
+- 🔗 **Cross-Reference Tips** - Smart suggestions linking related tabs and actions
+- 🎯 **Action Guidance** - Info banners explaining workflows (Rollback → Suspend → Test → Resume)
+- 🔔 **Toast Notifications** - Friendly success messages for all operations
+- 🎨 **Kubedash Branding** - Complete rebranding from Kite to Kubedash throughout UI
+
+### 🔧 **Technical Enhancements**
+- 🔍 **Real-Time Log Filtering** - Search across entire log history, not just new lines
+- 📋 **RBAC Autocomplete** - Namespace and resource dropdowns for faster role creation
+- 📏 **Scale to Zero** - Support for scaling deployments to 0 replicas
+- ⚡ **Optimized Docker Image** - Removed flux CLI dependency (~50MB smaller)
+- 🔌 **Multi-Version FluxCD** - Support for FluxCD API v2 → v1beta1
+
+For detailed information about all improvements, see [CHANGES.md](CHANGES.md).
+
+---
+
+## 🔍 Troubleshooting
+
+For troubleshooting, please refer to the [documentation](https://kite.xhilmi.me).
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [contributing guidelines](https://kite.xhilmi.me/faq.html#how-can-i-contribute-to-kite) for details on how to get involved.
+
+## 📄 License
+
+This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
